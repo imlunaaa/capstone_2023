@@ -21,16 +21,16 @@
     <script src="{{ asset('assets/pspdfkit.js') }}"></script>
     <script>
 
-        PSPDFKit.load({
-            container: "#pspdfkit",
-            document: "{{ asset('storage/pdf/document.pdf') }}" // Add the path to your document here.
-        })
-        .then(function(instance) {
-            console.log("PSPDFKit loaded", instance);
-        })
-        .catch(function(error) {
-            console.error(error.message);
-        });
+        // PSPDFKit.load({
+        //     container: "#pspdfkit",
+        //     document: "{{ asset('storage/pdf/document.pdf') }}" // Add the path to your document here.
+        // })
+        // .then(function(instance) {
+        //     console.log("PSPDFKit loaded", instance);
+        // })
+        // .catch(function(error) {
+        //     console.error(error.message);
+        // });
         
     </script>
 

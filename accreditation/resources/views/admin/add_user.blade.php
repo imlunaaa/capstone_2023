@@ -25,74 +25,102 @@
                 </ul>
             </div>
         @endif
-            <form method="POST" action="{{ route('add_user') }}" class="p-4">
-            @csrf
-            <div>
-                <label for="firstname">Firstname</label>
-                <input id="firstname" style="margin-top: 0.25rem; width: 100%; border: 1px solid #ccc;" type="text" name="firstname" value="{{ old('firstname') }}" required autofocus>
-                <div id="firstnameError" style="color: red; font-size: 0.75rem; margin-top: 0.25rem; display: none;">Please enter a firstname.</div>
-            </div>
+        <div class="container-fluid px-4 my-3">
+            <form method="POST" action="{{ route('add_user') }}" class="p-4 mx-5">
+                @csrf
+                <div>
+                    <label for="firstname" class="form-label">Firstname</label>
+                    <input id="firstname" class="form-control @error('firstname') is-invalid @enderror" type="text" name="firstname" value="{{ old('firstname') }}" autofocus style="border-radius: 5px">
+                    <div id="firstnameError" style="color: red; font-size: 0.75rem; margin-top: 0.25rem;">
+                        @error('firstname') Please enter a firstname. @enderror
+                    </div>
+                </div>
 
 
-            <div>
-                <label for="lastname">Lastname</label>
-                <input id="lastname" style="margin-top: 0.25rem; width: 100%;" type="text" name="lastname" value="{{ old('lastname') }}" required autofocus>
-                <div id="lastnameError" style="color: red; font-size: 0.75rem; margin-top: 0.25rem; display: none;">Please enter a lastname.</div>
-            </div>
-            <div style="margin-top: 1rem;">
-                <label for="campus">Campus</label>
-                <select name="campus">
-                    <option selected disabled>Select Campus</option>
-                    @forelse($campuses as $campus)
-                    <option value="{{$campus->id}}">{{$campus->name}}</option>
-                    @empty
-                    @endforelse
-                </select>
-            </div>
-            <div style="margin-top: 1rem;">
-                <label for="Program">Program</label>
-                <select name="program">
-                    <option selected disabled>Select Program</option>
-                    @forelse($programs as $program)
-                    <option value="{{$program->id}}">{{$program->program}}</option>
-                    @empty
-                    @endforelse
-                </select>
-            </div>
+                <div>
+                    <label for="lastname">Lastname</label>
+                    <input id="lastname" class="form-control @error('lastname') is-invalid @enderror" type="text" name="lastname" value="{{ old('lastname') }}" autofocus style="border-radius: 5px">
+                    <div id="lastnameError" style="color: red; font-size: 0.75rem; margin-top: 0.25rem;">
+                        @error('lastname') Please enter a lastname. @enderror
+                    </div>
+                </div>
 
-            <label for="areachair">Area Chair</label>
-            <input type="checkbox" id="areachair" name="areachair" value="1"><br>
-            <label for="areamember">Area Member</label>
-            <input type="checkbox" id="areamember" name="areamember" value="1"><br>
-            <label for="external">External</label>
-            <input type="checkbox" id="external" name="external" value="1"><br>
-            <label for="internal">Internal</label>
-            <input type="checkbox" id="internal" name="internal" value="1"><br>
+                <div style="margin-top: 1rem;">
+                    <label for="campus" class="form-label">Campus</label>
+                    <select name="campus" class="form-select">
+                        <option selected disabled>Select Campus</option>
+                        @forelse($campuses as $campus)
+                        <option value="{{$campus->id}}">{{$campus->name}}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
 
-            <div style="margin-top: 1rem;">
-                <label for="email">Email</label>
-                <input id="email" style="margin-top: 0.25rem; width: 100%;" type="email" name="email" value="{{ old('email') }}" required>
-                <div id="emailError" style="color: red; font-size: 0.75rem; margin-top: 0.25rem; display: none;">Please enter a email address.</div>
-            </div>
+                <div style="margin-top: 1rem;">
+                    <label for="Program">Program</label>
+                    <select name="program" class="form-select">
+                        <option selected disabled>Select Program</option>
+                        @forelse($programs as $program)
+                        <option value="{{$program->id}}">{{$program->program}}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
 
-            <div style="margin-top: 1rem;">
-                <label for="password">Password</label>
-                <input id="password" style="margin-top: 0.25rem; width: 100%;" type="password" name="password" required>
-                <div id="passError" style="color: red; font-size: 0.75rem; margin-top: 0.25rem; display: none;">Please enter a password.</div>
-            </div>
+                <div class="form-group py-2">
+                    <div class="form-check">
+                        <input type="checkbox" id="areachair" name="areachair" value="1" class="form-check-input">
+                        <label for="areachair" class="form-check-label">Area Chair</label>
+                    </div>
+                    
+                    <div class="form-check">
+                        <input type="checkbox" id="areamember" name="areamember" value="1" class="form-check-input">
+                        <label for="areamember" class="form-check-label">Area Member</label>
+                    </div>
+                    
+                    <div class="form-check">
+                        <input type="checkbox" id="external" name="external" value="1" class="form-check-input">
+                        <label for="external" class="form-check-label">External</label>
+                    </div>
 
-            <div style="margin-top: 1rem;">
-                <label for="password_confirmation">Confirm Password</label>
-                <input id="password_confirmation" style="margin-top: 0.25rem; width: 100%;" type="password" name="password_confirmation" required>
-                <div id="cpassError" style="color: red; font-size: 0.75rem; margin-top: 0.25rem; display: none;">Please enter a password.</div>
-            </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="internal" name="internal" value="1" class="form-check-input">
+                        <label for="internal" class="form-check-label">Internal</label>
+                    </div>
 
-            <div style="display: flex; align-items: center; justify-content: flex-end; margin-top: 1rem;">
-                <button style="margin-left: 0.5rem; padding: 0.5rem 1rem; background-color: #6366F1; color: #FFF; border: none; border-radius: 0.375rem; cursor: pointer;">
-                    Register
-                </button>
-            </div>
-        </form>
+                </div>
+
+                <div style="margin-top: 1rem;">
+                    <label for="email">Email</label>
+                    <input id="email" class="form-control @error('email') is-invalid @enderror" style="margin-top: 0.25rem; width: 100%;" type="email" name="email" value="{{ old('email') }}">
+                    <div id="emailError" style="color: red; font-size: 0.75rem; margin-top: 0.25rem;">
+                        @error('email') Please enter a email address. @enderror
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem;">
+                    <label for="password">Password</label>
+                    <input id="password" class="form-control @error('password') is-invalid @enderror" style="margin-top: 0.25rem; width: 100%;" type="password" name="password">
+                    <div id="passError" style="color: red; font-size: 0.75rem; margin-top: 0.25rem;">
+                        @error('password') Please enter a password. @enderror.
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem;">
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input id="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" style="margin-top: 0.25rem; width: 100%;" type="password" name="password_confirmation" >
+                    <div id="cpassError" style="color: red; font-size: 0.75rem; margin-top: 0.25rem;">
+                        @error('password_confirmation') Please enter a password. @enderror
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: flex-end; margin-top: 1rem;">
+                    <button style="margin-left: 0.5rem; padding: 0.5rem 1rem; background-color: #6366F1; color: #FFF; border: none; border-radius: 0.375rem; cursor: pointer;">
+                        Register
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </x-app-layout>
 
@@ -145,6 +173,8 @@
         if (firstnameValue === '') {
             firstnameInput.style.borderColor = 'red'; // Change border color to red
             firstnameError.style.display = 'block'; // Show error message
+            firstnameError.innerHTML = "<p>Please enter a firstname</p>";
+
             return false;
         }
 
@@ -159,6 +189,7 @@
         if (lastnameValue === '') {
             lastnameInput.style.borderColor = 'red'; // Change border color to red
             lastnameError.style.display = 'block'; // Show error message
+            lastnameError.innerHTML = "<p>Please enter a lastname</p>";
             return false;
         }
 
@@ -173,6 +204,8 @@
         if (value === '') {
             emailInput.style.borderColor = 'red'; // Change border color to red
             emailError.style.display = 'block'; // Show error message
+            emailError.innerHTML = "<p>Please enter a email address</p>";
+
             return false;
         }
 
@@ -188,6 +221,7 @@
         if (value == '') {
             passInput.style.borderColor = 'red'; // Change border color to red
             passError.style.display = 'block'; // Show error message
+            passError.innerHTML = "<p>Please enter a password</p>";
             return false;
         }
         if (value.length < 6) {
@@ -209,6 +243,8 @@
         if (value == '') {
             cpassInput.style.borderColor = 'red'; // Change border color to red
             cpassError.style.display = 'block'; // Show error message
+            cpassError.innerHTML = "<p>Please enter a password</p>";
+
             return false;
         }
         if (value != value2) {

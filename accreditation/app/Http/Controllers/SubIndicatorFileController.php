@@ -103,9 +103,25 @@ class SubIndicatorFileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) 
     {
         //
+        $file = SubIndicatorFile::find($id);
+        if (!$file) {
+            return abort(404);
+        }
+        $filename=$file->file_name;
+        $filepath=$file->file_location;
+        $file_url=asset($file->file_location);
+        $file_data=[
+          [
+            'label' => __('Label'),
+            'value' => "Value"
+          ]
+        ];
+
+        //return LaravelFileViewer::show($filename, $filepath, $file_url, $file_data);
+        return view('area chair.view_subindicator_file')->with('file', $file);
     }
 
     /**

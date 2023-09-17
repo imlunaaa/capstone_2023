@@ -52,6 +52,7 @@ class RegisteredUserController extends Controller
             'campus' => 'required',
             'program' => 'required',
             'password' => 'required',
+            'password_confirmation' => 'required',
         ]);
 
 

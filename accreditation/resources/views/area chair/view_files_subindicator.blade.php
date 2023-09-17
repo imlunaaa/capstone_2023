@@ -58,7 +58,7 @@
                                 <td>{{$file->file_name}}</td>
                                 <td>{{$file->file_type}}</td>
                                 <td>{{date('M d, Y h:i A', strtotime($file->file_uploaded_at))}}</td>
-                                <td><a href="/view_indicator_file/{{$file->id}}" target="_blank">View</a></td>
+                                <td><a href="/view_subindicator_file/{{$file->id}}" target="_blank"><button class="btn btn-outline-primary">View</button></a></td>
                             </tr>
                         @empty
                             <tr>

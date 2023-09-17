@@ -142,6 +142,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('view_files_subindicator/{subindicator_id}/{paramter_id}', [SubIndicatorFileController::class, 'index']);
     Route::post('upload_files_subindicator', [SubIndicatorFileController::class, 'store']);
+    Route::get('view_subindicator_file/{id}', [SubIndicatorFileController::class, 'show']);
 });
 
 Route::middleware(['auth'])->group(function () {

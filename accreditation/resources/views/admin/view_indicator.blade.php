@@ -33,7 +33,7 @@
         <div class="row justify-content-between">
             <div class="col-4">
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addIndicatorModal">Add Indicator</button>
-            </div>
+            </div> 
         </div>
 
         <!--Indicator Modal -->
@@ -84,6 +84,7 @@
         @if(sizeof($indicators))
             @forelse($categories AS $category)
                 @if($category->category_name == 'NOT APPLICABLE')
+                <br>
                     <div class="container"> 
                         <div class="accordion accordion-flush" id="accordionIndicator">
                             @forelse($indicators As $indicator)
@@ -102,8 +103,14 @@
                                                                 <i class="fa-solid fa-plus"></i> Add Sub Indicator
                                                             </a>
                                                         </li>
-                                                        <li><a class="dropdown-item" href="/edit_indicator/{{$indicator->id}}"><i class="fa-solid fa-pen-to-square"></i> Edit</a></li>
-                                                        <li><a class="dropdown-item" href="{{ route('delete_indicator', ['id' => $indicator->id]) }}"><i class="fa-solid fa-trash "></i> Delete</a></li>
+                                                        <a class="dropdown-item" href="/edit_indicator/{{$indicator->id}}">
+                                                            <li><i class="fa-solid fa-pen-to-square"></i> Edit</li>
+                                                        </a>
+                                                        <a class="dropdown-item" href="{{ route('delete_indicator', ['id' => $indicator->id]) }}">
+                                                            <li>
+                                                                <i class="fa-solid fa-trash "></i> Delete
+                                                            </li>
+                                                        </a>
                                                     </ul>
                                                 </div>
                                                 <div class="col-md-auto">
@@ -125,7 +132,7 @@
                                                             @if($subindicator->indicator_id == $indicator->id)
                                                                 <div class="accordion-item">
                                                                     <h2 class="accordion-header" id="heading-subindicator{{$subindicator->id}}">
-                                                                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#subindicator-collapse{{$subindicator->id}}" aria-expanded="true" aria-controls="collapseTwo">
+                                                                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#subindicator-collapse{{$subindicator->id}}" aria-expanded="true" aria-controls="collapseTwo">
                                                                        <div class="row">
                                                                             <div class="col-md-auto">
                                                                                 <div class="p-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -137,8 +144,12 @@
                                                                                             <i class="fa-solid fa-plus"></i> Add Component
                                                                                         </a>
                                                                                     </li>
-                                                                                    <li><a class="dropdown-item" href="/edit_sub_indicator/{{$subindicator->id}}/{{$id}}"><i class="fa-solid fa-pen-to-square"></i> Edit</a></li>
-                                                                                    <li><a class="dropdown-item" href="{{ route('delete_sub_indicator', ['id' => $subindicator->id, 'action' => 'delete']) }}"><i class="fa-solid fa-trash "></i> Delete</a></li>
+                                                                                    <a class="dropdown-item" href="/edit_sub_indicator/{{$subindicator->id}}/{{$id}}">
+                                                                                        <li><i class="fa-solid fa-pen-to-square"></i> Edit</li>
+                                                                                    </a>
+                                                                                    <a class="dropdown-item" href="{{ route('delete_sub_indicator', ['id' => $subindicator->id, 'action' => 'delete']) }}">
+                                                                                        <li><i class="fa-solid fa-trash "></i> Delete</li>
+                                                                                    </a>
                                                                                 </ul>
                                                                             </div>
                                                                             <div class="col-md-auto">
@@ -159,16 +170,16 @@
                                                                                             <i class="fa-solid fa-ellipsis-vertical "></i>
                                                                                         </div>
                                                                                         <ul class="dropdown-menu dropdown-menu-dark">
-                                                                                            <li>
-                                                                                                <a class="dropdown-item" href="/edit_sub_component/{{$subindicator->id}}/{{$id}}">
-                                                                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a class="dropdown-item" href="/delete_sub_component/{{$subcomponent->id}}">
+                                                                                            <a class="dropdown-item" href="/edit_sub_component/{{$subindicator->id}}/{{$id}}">
+                                                                                                <li>
+                                                                                                    <i class="fa-solid fa-pen-to-square"></i> Edit 
+                                                                                                </li>
+                                                                                            </a>
+                                                                                            <a class="dropdown-item" href="/delete_sub_component/{{$subcomponent->id}}">
+                                                                                                <li>
                                                                                                     <i class="fa-solid fa-trash "></i> Delete
-                                                                                                </a>
-                                                                                            </li>
+                                                                                                </li>
+                                                                                            </a>
                                                                                         </ul>
                                                                                     </div>
                                                                                     <div class="col-md-auto">
@@ -301,8 +312,14 @@
                                                                 <i class="fa-solid fa-plus"></i> Add Sub Indicator
                                                             </a>
                                                         </li>
-                                                        <li><a class="dropdown-item" href="/edit_indicator/{{$indicator->id}}"><i class="fa-solid fa-pen-to-square"></i> Edit</a></li>
-                                                        <li><a class="dropdown-item" href="{{ route('delete_indicator', ['id' => $indicator->id]) }}"><i class="fa-solid fa-trash "></i> Delete</a></li>
+                                                        <a class="dropdown-item" href="/edit_indicator/{{$indicator->id}}">
+                                                            <li><i class="fa-solid fa-pen-to-square"></i> Edit</li>
+                                                        </a>
+                                                        <a class="dropdown-item" href="{{ route('delete_indicator', ['id' => $indicator->id]) }}">
+                                                            <li>
+                                                                <i class="fa-solid fa-trash "></i> Delete
+                                                            </li>
+                                                        </a>
                                                     </ul>
                                                 </div>
                                                 <div class="col-md-auto">
@@ -324,7 +341,7 @@
                                                             @if($subindicator->indicator_id == $indicator->id)
                                                                 <div class="accordion-item">
                                                                     <h2 class="accordion-header" id="heading-subindicator{{$subindicator->id}}">
-                                                                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#subindicator-collapse{{$subindicator->id}}" aria-expanded="true" aria-controls="collapseTwo">
+                                                                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#subindicator-collapse{{$subindicator->id}}" aria-expanded="true" aria-controls="collapseTwo">
                                                                        <div class="row">
                                                                             <div class="col-md-auto">
                                                                                 <div class="p-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -336,8 +353,12 @@
                                                                                             <i class="fa-solid fa-plus"></i> Add Component
                                                                                         </a>
                                                                                     </li>
-                                                                                    <li><a class="dropdown-item" href="/edit_sub_indicator/{{$subindicator->id}}/{{$id}}"><i class="fa-solid fa-pen-to-square"></i> Edit</a></li>
-                                                                                    <li><a class="dropdown-item" href="{{ route('delete_sub_indicator', ['id' => $subindicator->id, 'action' => 'delete']) }}"><i class="fa-solid fa-trash "></i> Delete</a></li>
+                                                                                    <a class="dropdown-item" href="/edit_sub_indicator/{{$subindicator->id}}/{{$id}}">
+                                                                                        <li><i class="fa-solid fa-pen-to-square"></i> Edit</li>
+                                                                                    </a>
+                                                                                    <a class="dropdown-item" href="{{ route('delete_sub_indicator', ['id' => $subindicator->id, 'action' => 'delete']) }}">
+                                                                                        <li><i class="fa-solid fa-trash "></i> Delete</li>
+                                                                                    </a>
                                                                                 </ul>
                                                                             </div>
                                                                             <div class="col-md-auto">
@@ -358,16 +379,16 @@
                                                                                             <i class="fa-solid fa-ellipsis-vertical "></i>
                                                                                         </div>
                                                                                         <ul class="dropdown-menu dropdown-menu-dark">
-                                                                                            <li>
-                                                                                                <a class="dropdown-item" href="/edit_sub_component/{{$subindicator->id}}/{{$id}}">
-                                                                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a class="dropdown-item" href="/delete_sub_component/{{$subcomponent->id}}">
+                                                                                            <a class="dropdown-item" href="/edit_sub_component/{{$subindicator->id}}/{{$id}}">
+                                                                                                <li>
+                                                                                                    <i class="fa-solid fa-pen-to-square"></i> Edit 
+                                                                                                </li>
+                                                                                            </a>
+                                                                                            <a class="dropdown-item" href="/delete_sub_component/{{$subcomponent->id}}">
+                                                                                                <li>
                                                                                                     <i class="fa-solid fa-trash "></i> Delete
-                                                                                                </a>
-                                                                                            </li>
+                                                                                                </li>
+                                                                                            </a>
                                                                                         </ul>
                                                                                     </div>
                                                                                     <div class="col-md-auto">
