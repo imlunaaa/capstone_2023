@@ -19,8 +19,8 @@ class ProgramLevelController extends Controller
     public function index(Request $request)
     {
         //
-        $programs = Program::select()->get();
-        $campuses = Campus::select()->get();
+        $programs = Program::select()->OrderBy('program')->get();
+        $campuses = Campus::select()->OrderBy('name')->get();
         $programLevels = ProgramLevel::join('programs', 'program_levels.program_id', '=', 'programs.id')->join('campuses', 'program_levels.campus_id', '=', 'campuses.id')->select('program_levels.*', 'program_levels.id as plID',  'campuses.*', 'campuses.name AS cname', 'programs.program AS prog', 'programs.*')->when($request->area, function ($query) use ($request) {
                 $query->where('campus_id', $request->area);})->paginate(10);
 

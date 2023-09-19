@@ -62,10 +62,11 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'campus_id' =>$request->campus,
             'program_id' =>$request->program,
-            'isAreachair' => $request->has('areachair') ? 1 : 0,
-            'isAreamember' => $request->has('areamember') ? 1 : 0,
-            'isExternal' => $request->has('external') ? 1 : 0,
-            'isInternal' => $request->has('internal') ? 1 : 0,
+            'user_type'=>'user',
+            // 'isAreachair' => $request->has('areachair') ? 1 : 0,
+            // 'isAreamember' => $request->has('areamember') ? 1 : 0,
+            // 'isExternal' => $request->has('external') ? 1 : 0,
+            // 'isInternal' => $request->has('internal') ? 1 : 0,
             'password' => Hash::make($request->password),
         ]);
         if($user)

@@ -12,27 +12,14 @@ class HomeController extends Controller
     {
         if(Auth::id())
         {
-            $areachair=Auth()->user()->isAreachair;
-            $areamember=Auth()->user()->isAreamember;
-            $admin=Auth()->user()->isAdmin;
-            $internal=Auth()->user()->isInternal;
-            $external=Auth()->user()->isExternal;
 
-            if($admin=='1')
+            if(Auth()->user()->user_type =='admin')
             {
                 return view('admin.adminhome');
             }
-            if($areachair =='1' || $areamember == '1')
+            if(Auth()->user()->user_type == 'user')
             {
                 return view('area chair.areachairhome');
-            }
-            if($internal=='1')
-            {
-                return view('internal accreditor.internalhome');
-            }
-            if($external=='1')
-            {
-                return view('external accreditor.externalhome');
             }
             else
             {

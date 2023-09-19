@@ -13,20 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('campuses', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('role_type');
             $table->timestamps();
         });
 
-        DB::table('campuses')->insert(
-            array(
-                'id'=>null, 
-                'name'=> 'Udaneta City Campus', 
-                'created_at'=> NOW(), 
-                'updated_at'=> NOW(),
-            )
-        );
     }
 
     /**
@@ -36,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('campuses');
+        Schema::dropIfExists('roles');
     }
 };

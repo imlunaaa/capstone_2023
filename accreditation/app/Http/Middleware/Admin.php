@@ -16,7 +16,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth()->user()->isAdmin=='1')
+        if(Auth()->user()->user_type = 'admin')
         {
             return $next($request);
         }

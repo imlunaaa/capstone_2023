@@ -25,10 +25,10 @@ class ParameterController extends Controller
             })->paginate(10);
         
         $areas = Area::select()->OrderBy('area_name')->get();
-        if(Auth::user()->isAdmin == 1){
+        if(Auth::user()->user_type == 'admin'){
             return view('admin.parameter_list')->with('parameters', $parameters)->with('areas', $areas)->with('request', $request);
         }
-        if(Auth::user()->isAreachair == 1 || Auth::user()->isAreamember == 1){
+        if(Auth::user()->user_type == 'user' || Auth::user()->isAreamember == 1){
             return view('area chair.parameters')->with('parameters', $parameters)->with('areas', $areas)->with('request', $request);
         }
         

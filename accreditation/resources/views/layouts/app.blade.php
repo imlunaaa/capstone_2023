@@ -15,25 +15,31 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Bootstrap JS -->
-        <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
+        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
         <!-- Bootstrap CSS -->
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
         <!-- Fontawesome JS -->
-        <script src="{{ asset('js/all.min.js') }}" defer></script>
+        <script src="{{ asset('js/all.min.js') }}"></script>
 
         <!-- Fontawesome Css -->
         <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
         
         <!-- Toastr JS -->
-        <script src="{{ asset('js/toastr.min.js') }}" defer></script>
+        <script src="{{ asset('js/toastr.min.js') }}"></script>
 
          <!-- Toastr CSS -->
         <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
 
         <!-- Jquery -->
-        <script src="{{ asset('js/jquery/jquery.js') }}" defer></script>
+        <script src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+
+        <!-- Datatable JS -->
+        <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+
+        <!-- Datatable CSS -->
+        <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])

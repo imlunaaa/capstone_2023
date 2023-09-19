@@ -30,10 +30,10 @@ class IndicatorController extends Controller
         $subcomponents = SubIndicatorComponent::select()->get();
         $categories = IndicatorCategory::select()->get();
         $areas = Area::select()->get();
-        if(Auth::user()->isAdmin == 1){
+        if(Auth::user()->user_type == "admin"){
             return view('admin.view_indicator')->with('parameters', $parameters)->with('param', $param)->with('indicators', $indicators)->with('id', $id)->with('subindicators', $subindicators)->with('subcomponents', $subcomponents)->with('categories', $categories)->with('areas'. $areas)->with('counter', $counter);
         }
-        if(Auth::user()->isAreachair == 1){
+        if(Auth::user()->user_type == "user"){
             return view('area chair.view_indicator_areachair')->with('parameters', $parameters)->with('param', $param)->with('indicators', $indicators)->with('id', $id)->with('subindicators', $subindicators)->with('subcomponents', $subcomponents)->with('categories', $categories)->with('areas'. $areas)->with('counter', $counter);
         }
     }

@@ -18,8 +18,8 @@ class UserController extends Controller
     public function index()
     {
         //
-        $users = User::join('campuses', 'users.campus_id', '=', 'campuses.id')
-        ->select('users.*', 'users.id as user_id', 'campuses.id as campus_id', 'campuses.name as campus_name')
+        $users = User::join('campuses', 'users.campus_id', '=', 'campuses.id')->join('programs', 'users.program_id', '=', 'programs.id')
+        ->select('users.*', 'users.id as user_id', 'campuses.id as campus_id', 'campuses.name as campus_name', 'programs.program as program')->OrderBy('lastname')
         ->get();
 
 
@@ -103,14 +103,10 @@ class UserController extends Controller
             'lastname' => $request->lastname,
             'campus_id' =>$request->campus,
             'program_id' =>$request->program,
-            'isAreachair' => $request->has('areachair') ? 1 : 0,
-            'isAreamember' => $request->has('areamember') ? 1 : 0,
-            'isExternal' => $request->has('external') ? 1 : 0,
-            'isInternal' => $request->has('internal') ? 1 : 0,
         ]);
         if ($user) {
             // Add a flash message to indicate successful deletion
-            session()->flash('success', 'User update successfully.');
+            session()->flash('success', 'User updated successfully.');
         } else {
             // Add a flash message to indicate that the record was not found
             session()->flash('error', 'Something went wrong, please try again.');
@@ -131,8 +127,8 @@ class UserController extends Controller
         $user = User::find($id);
         if($user)
         {
-            $adminCount = User::select()->where('isAdmin', 1)->count();
-            if($user->isAdmin == 1 && $adminCount == 1)
+            $adminCount = User::select()->where('user_type', 'admin')->count();
+            if($user->user_type == 'admin' && $adminCount == 1)
             {
                 session()->flash('error', 'Deletion Invalid, Must be atleast 1 admin account');
             }else{

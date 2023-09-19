@@ -37,7 +37,7 @@
                                 <i class="fas fa-user"></i> Accreditation
                             </a>
                         </li>
-                        @if(Auth::user()->isAdmin == '1')
+                        @if(Auth::user()->user_type == 'admin')
                          <li class="list-group-item {{ request()->is('user_list') ? 'active' : '' }}">
                             <a href="/user_list">
                                 <i class="fas fa-users"></i> User List

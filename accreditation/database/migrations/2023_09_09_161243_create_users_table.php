@@ -24,14 +24,33 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->smallInteger('isAdmin')->default('0');
-            $table->smallInteger('isAreachair')->default('0');
-            $table->smallInteger('isAreamember')->default('0');
-            $table->smallInteger('isExternal')->default('0');
-            $table->smallInteger('isInternal')->default('0');
+            $table->string('user_type');
+            // $table->smallInteger('isAdmin')->default('0');
+            // $table->smallInteger('isAreachair')->default('0');
+            // $table->smallInteger('isAreamember')->default('0');
+            // $table->smallInteger('isExternal')->default('0');
+            // $table->smallInteger('isInternal')->default('0');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        $pass = '$2y$10$sYdGtY2c1zLGM4CNCAjcP.oZ7MvwT7RwKvRGXxtfN./86cgfnfNki';
+        DB::table('users')->insert(
+            array(
+                'id'=>null, 
+                'firstname'=>'admin',
+                'lastname'=>'admin',
+                'campus_id'=>1,
+                'program_id'=>1,
+                'email'=>'admin@gmail.com',
+                'email_verified_at'=> null,
+                'password'=>$pass,
+                'user_type'=>'admin',
+                'remember_token'=> '',
+                'created_at'=> NOW(), 
+                'updated_at'=> NOW(),
+            )
+        );
     }
 
     /**

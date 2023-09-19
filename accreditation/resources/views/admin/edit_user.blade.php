@@ -49,14 +49,14 @@
                 </select>
             </div>
 
-            <label for="areachair">Area Chair</label>
+            <!-- <label for="areachair">Area Chair</label>
             <input type="checkbox" id="areachair" name="areachair" value="1" {{$user->isAreachair == 1 ? 'checked' : ''}}><br>
             <label for="areamember">Area Member</label>
             <input type="checkbox" id="areamember" name="areamember" value="1" {{$user->isAreamember == 1 ? 'checked' : ''}}><br>
             <label for="external">External</label>
             <input type="checkbox" id="external" name="external" value="1" {{$user->isExternal == 1 ? 'checked' : ''}}><br>
             <label for="internal">Internal</label>
-            <input type="checkbox" id="internal" name="internal" value="1" {{$user->isIntenal == 1 ? 'checked' : ''}}><br>
+            <input type="checkbox" id="internal" name="internal" value="1" {{$user->isIntenal == 1 ? 'checked' : ''}}><br> -->
 
             <!-- <div style="margin-top: 1rem;">
                 <label for="email">Email</label>

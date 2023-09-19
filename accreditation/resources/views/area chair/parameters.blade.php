@@ -43,9 +43,9 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Area Name</th>
                     <th>Parameter</th>
                     <th>Parameter Title</th>
-                    <th>Area Name</th>
                     <th>Area Title</th>
                     <th>Action</th>
                 </tr>
@@ -53,9 +53,9 @@
             <tbody>
                 @forelse($parameters As $parameter)
                     <tr>
+                        <td>{{$parameter->area->area_name}}</td>
                         <td>{{$parameter->parameter}}</td>
                         <td>{{Str::limit($parameter->parameter_title, 50)}}</td>
-                        <td>{{$parameter->area->area_name}}</td>
                         <td>{{$parameter->area->area_title}}</td>
                         <td><a href="view_indicator_areachair/{{$parameter->paramID}}"><button class="btn btn-outline-primary">View  Indicators</button></a></td>
                     </tr>

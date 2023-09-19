@@ -24,6 +24,12 @@
 
          <!-- Fontawesome Css -->
         <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+
+         <!-- Fontawesome JS -->
+        <script src="{{ asset('js/fontawesome.min.js') }}" defer></script>
+
+         <!-- Fontawesome Css -->
+        <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
         
         <!-- Toastr JS -->
         <script src="{{ asset('js/toastr.min.js') }}" defer></script>
@@ -32,7 +38,15 @@
         <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
 
         <!-- Jquery -->
-        <script src="{{ asset('js/jquery/jquery.js') }}" defer></script>
+        <script src="{{ asset('js/jquery-3.6.1.min.js') }}" ></script>
+
+        <!-- Datatable JS -->
+        <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+
+        <!-- Datatable CSS -->
+        <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
+
+        <!-- <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
 
         <!-- Styles -->
         <style>

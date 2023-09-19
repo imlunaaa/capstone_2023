@@ -5,3 +5,7 @@
 	}
 }
 
+.list-group-item:hover {
+    background-color: #ccc; /* Change the background color on hover */
+    cursor: pointer; /* Change the cursor to a pointer on hover */
+}

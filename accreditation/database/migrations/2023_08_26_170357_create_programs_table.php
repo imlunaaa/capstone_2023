@@ -18,6 +18,15 @@ return new class extends Migration
             $table->string('program');
             $table->timestamps();
         });
+
+        DB::table('programs')->insert(
+            array(
+                'id'=>null, 
+                'program'=> 'Administration', 
+                'created_at'=> NOW(), 
+                'updated_at'=> NOW(),
+            )
+        );
     }
 
     /**

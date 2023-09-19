@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\ProgramLevel;
 use App\Models\Campus;
@@ -24,10 +25,10 @@ class AccreditationController extends Controller
         $programLevels = ProgramLevel::join('programs', 'program_levels.program_id', '=', 'programs.id')->join('campuses', 'program_levels.campus_id', '=', 'campuses.id')->select('program_levels.*', 'program_levels.id as plID',  'campuses.*', 'campuses.name AS cname', 'programs.program AS prog', 'programs.*')->get();
         $campuses = Campus::select()->get();
         $accreditations = [];
-        if(Auth::user()->isAdmin == 1){
-            $accreditations = Accreditation::join('program_levels', 'accreditations.program_level_id', '=', 'program_levels.id')->join('programs', 'program_levels.program_id', '=', 'programs.id')->join('campuses', 'program_levels.campus_id', '=', 'campuses.id')->select('program_levels.*', 'program_levels.id as plID',  'campuses.*', 'campuses.name AS cname', 'programs.program AS prog', 'programs.*', 'accreditations.*')->get();
+        if(Auth::user()->user_type == "admin"){
+            $accreditations = Accreditation::join('program_levels', 'accreditations.program_level_id', '=', 'program_levels.id')->join('programs', 'program_levels.program_id', '=', 'programs.id')->join('campuses', 'program_levels.campus_id', '=', 'campuses.id')->select('program_levels.*', 'program_levels.id as plID', 'program_levels.level as prog_level',  'campuses.*', 'campuses.name AS cname', 'programs.program AS prog', 'programs.*', 'accreditations.*')->get();
         }else{
-            $accreditations = Accreditation::join('program_levels', 'accreditations.program_level_id', '=', 'program_levels.id')->join('programs', 'program_levels.program_id', '=', 'programs.id')->join('campuses', 'program_levels.campus_id', '=', 'campuses.id')->join('members', 'accreditations.id', '=', 'members.accreditation_id')->select('program_levels.*', 'program_levels.id as plID',  'campuses.*', 'campuses.name AS cname', 'programs.program AS prog', 'programs.*', 'accreditations.*')->where('members.user_id', $user_id)->get();
+            $accreditations = Accreditation::join('program_levels', 'accreditations.program_level_id', '=', 'program_levels.id')->join('programs', 'program_levels.program_id', '=', 'programs.id')->join('campuses', 'program_levels.campus_id', '=', 'campuses.id')->join('members', 'accreditations.id', '=', 'members.accreditation_id')->select('program_levels.*', 'program_levels.id as plID', 'program_levels.level as prog_level',  'campuses.*', 'campuses.name AS cname', 'programs.program AS prog', 'programs.*', 'accreditations.*')->where('members.user_id', $user_id)->get();
         }
         
         return view('admin.manage_accreditation')->with('accreditations', $accreditations)->with('programLevels', $programLevels)->with('campuses', $campuses);
@@ -52,21 +53,38 @@ class AccreditationController extends Controller
     public function store(Request $request)
     {
         //
+        
         $rules = [
-            'accreditation_name'=>'required',
-            'program'=>'required',
-            'acc_type'=>'required',
-            'inter_date_start'=>'required|before:inter_date_end|date',
-            'inter_date_end'=>'required|after:inter_date_start|date',
-            'exter_date_start'=>'required|after:inter_date_end|before:exter_date_end|date',
-            'exter_date_end'=>'required|after:exter_date_start|date',
-        ];
-        $customMessage = [
-            'required'=>':attribute must be filled',
-            'date'=>':attribute must a date',
+            'accreditation_name' => 'required',
+            'program' => 'required',
+            'acc_type' => 'required',
+            'inter_date_start' => 'required|before:inter_date_end|date',
+            'inter_date_end' => 'required|after:inter_date_start|date',
+            'exter_date_start' => 'required|after:inter_date_end|before:exter_date_end|date',
+            'exter_date_end' => 'required|after:exter_date_start|date',
         ];
 
-        $this->validate($request, $rules, $customMessage);
+        $customMessages = [
+            'required' => '*This field is required.',
+            'date' => '*This field must be a valid date.',
+            'before' => '*The :attribute must be before :date.',
+            'after' => '*The :attribute must be after :date.',
+        ];
+
+        $attributes = [
+            'inter_date_start' => 'Internal Accreditaion Start Date',
+            'inter_date_end' => 'Internal Accreditaion End Date',
+            'exter_date_start' => 'External Accreditaion Start Date',
+            'exter_date_end' => 'External Accreditaion End Date',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $customMessages);
+        $validator->setAttributeNames($attributes);
+
+        if ($validator->fails()) {
+            // Handle validation failure
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         $acc_name = $request->input('accreditation_name');
         $program = $request->input('program');

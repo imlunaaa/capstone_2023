@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Accreditation;
 use App\Models\Member;
 use App\Models\User;
 use DB;
+
+class Roles
+{
+    public $isCoordinator;
+    public $isAreachair;
+    public $isAreamember;
+    public $isExternal;
+    public $isInternal;
+}
 
 class MemberController extends Controller
 {
@@ -61,12 +71,12 @@ class MemberController extends Controller
         }
         if ($members) {
             // Add a flash message to indicate successful deletion
-            session()->flash('success', 'User/s added successfully.');
+            session()->flash('success', 'Member/s added successfully.');
         } else {
             // Add a flash message to indicate that the record was not found
             session()->flash('error', 'Something went wrong, please try again.');
         }
-        return redirect()->route('admin.manage_user.show', ['id'=>$acc_id]);
+        return redirect()->route('admin.manage_member.show', ['id'=>$acc_id]);
     }
 
     /**
@@ -78,11 +88,31 @@ class MemberController extends Controller
     public function show($id)
     {
         //
-        $members = Member::join('users', 'members.user_id',  '=', 'users.id')->select('users.firstname AS fname', 'users.lastname AS lname', 'members.user_id AS uid', 'members.id AS mid', 'users.*', 'members.*')->where('accreditation_id', $id)->get();
-        //$users = User::select()->where('isAdmin', '!=', 1)->get();
+        $uid = Auth::id();
+        $members = Member::join('users', 'members.user_id',  '=', 'users.id')->select('users.firstname AS fname', 'users.lastname AS lname', 'members.user_id AS uid', 'members.id AS mid', 'users.*', 'members.*')->where('accreditation_id', $id)->OrderBy('lastname')->get();
+        $users = DB::select("SELECT users.*, users.id as user_id, campuses.id as campus_id, campuses.name as campus_name, programs.program as program
+        FROM users
+        INNER JOIN campuses ON users.campus_id = campuses.id
+        INNER JOIN programs ON users.program_id = programs.id
+        WHERE user_type != 'admin'
+        AND NOT EXISTS (
+            SELECT * FROM members
+            WHERE accreditation_id = ?
+            AND members.user_id = users.id
+        )
+        ORDER BY lastname ASC;
+        ", [$id]);
 
-        $users = DB::select('SELECT * FROM users WHERE isAdmin != 1 AND NOT EXISTS (SELECT * FROM members WHERE accreditation_id = ? AND members.user_id = users.id)', [$id]);
-        return view('admin.manage_user')->with('members', $members)->with('id', $id)->with('users', $users);
+        $roles = new Roles();
+        if(Auth::user()->user_type == 'user'){
+            $member = Member::select('*')->where('user_id', $uid)->first();
+            $roles->isCoordinator= $member->isCoordination;
+            $roles->isAreachair = $member->isAreachair;
+            $roles->isAreamember = $member->isAreamember;
+            $roles->isExternal = $member->isExternal;
+            $roles->isInternal = $member->isInternal;
+        }
+        return view('admin.manage_member')->with('members', $members)->with('id', $id)->with('users', $users)->with('roles', $roles);
     }
 
     /**
@@ -106,6 +136,23 @@ class MemberController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $mid = $request->input('id');
+        $member = Member::where('id', $id)->update([
+            'isAreachair' => $request->input('areachair') == 0 ? 1 : 0,
+            'isAreamember' => $request->input('areachair') == 1 ? 1 : 0,
+            'isExternal' => $request->has('external') ? 1 : 0,
+            'isInternal' => $request->has('internal') ? 1 : 0,
+            'isCoordinator' => $request->has('coordinator') ? 1 : 0,
+        ]);
+
+        if ($member) {
+            // Add a flash message to indicate successful deletion
+            session()->flash('success', 'Role updated successfully.');
+        } else {
+            // Add a flash message to indicate that the record was not found
+            session()->flash('error', 'Something went wrong, please try again.');
+        }
+        return redirect()->route('admin.manage_member.show', ['id' => $mid]);
     }
 
     /**
@@ -120,7 +167,7 @@ class MemberController extends Controller
         $member = Member::find($id);
         if($member){
             $member->delete();
-            session()->flash('success', 'User removed successfully.');
+            session()->flash('success', 'Member removed successfully.');
         } else {
             // Add a flash message to indicate that the record was not found
             session()->flash('error', 'Something went wrong, please try again.');

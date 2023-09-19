@@ -101,7 +101,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('program_level_list/{id}', [ProgramLevelController::class, 'destroy']);
     Route::get('edit_program_level/{id}', [ProgramLevelController::class, 'edit']);
     Route::post('edit_program_level/{id}', [ProgramLevelController::class, 'update']);
-
     
     Route::get('view_indicator/{action}/{id}', [SubIndicatorController::class, 'destroy'])->name('delete_sub_indicator');
 
@@ -118,10 +117,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('manage_accreditation', [AccreditationController::class, 'store'])->name('add_accreditation');
     Route::get('manage_accreditation/{id}', [AccreditationController::class, 'destroy']);
 
-    Route::get('manage_user/{id}', [MemberController::class, 'show'])->name('admin.manage_user.show');
-    Route::post('manage_user', [MemberController::class, 'store'])->name('add_members');
-    Route::get('manage_user/{action}/{id}', [MemberController::class, 'destroy'])->name('delete_members');
-
     Route::get('indicator_category_list', [IndicatorCategoryController::class, 'index']);
     Route::post('add_indicator_category', [IndicatorCategoryController::class, 'store']);
     Route::get('edit_indicator_category/{id}', [IndicatorCategoryController::class, 'edit']);
@@ -135,6 +130,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('parameters', [ParameterController::class, 'index']);
     Route::get('view_indicator_areachair/{id}', [IndicatorController::class, 'index']);
 
+    Route::get('manage_member/{id}', [MemberController::class, 'show'])->name('admin.manage_member.show');
+    Route::post('manage_member', [MemberController::class, 'store'])->name('add_members');
+    Route::get('manage_member/{action}/{id}', [MemberController::class, 'destroy'])->name('delete_members');
+    Route::post('update_role/{id}', [MemberController::class, 'update']);
 
     Route::get('view_files_indicator/{indicator_id}/{paramter_id}', [IndicatorFileController::class, 'index']);
     Route::post('upload_files_indicator', [IndicatorFileController::class, 'store']);
